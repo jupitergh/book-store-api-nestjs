@@ -15,7 +15,7 @@ export class Book extends BaseEntity {
   @Column('varchar', { nullable: false })
   description: string
 
-  @ManyToOne(() => Author, author => author.books, { nullable: false })
+  @ManyToOne(() => Author, author => author.books, { nullable: false, eager: true })
   @JoinColumn({ name: 'author_id' })
   author: Author
 

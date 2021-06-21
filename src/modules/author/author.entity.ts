@@ -9,7 +9,7 @@ export class Author extends BaseEntity {
   @Column('varchar', { nullable: false })
   name: string
 
-  @Column('varchar', { nullable: true })
+  @Column('varchar', { nullable: true, name: 'last_name' })
   lastName: string
 
   @OneToMany(() => Book, book => book.author)

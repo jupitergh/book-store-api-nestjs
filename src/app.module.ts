@@ -3,11 +3,13 @@ import { ConfigService } from '@nestjs/config'
 import { Configuration } from './config/config.keys'
 import { CConfigModule } from './config/config.module'
 import { DatabaseModule } from './database/database.module'
+import { BookModule } from './modules/book/book.module';
 
 @Module({
   imports: [
     CConfigModule,
-    DatabaseModule
+    DatabaseModule,
+    BookModule
   ]
 
 })

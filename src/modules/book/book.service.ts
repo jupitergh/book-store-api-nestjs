@@ -1,5 +1,5 @@
 import { BookRepository } from './book.repository'
-import { Injectable } from '@nestjs/common'
+import { Injectable, BadRequestException } from '@nestjs/common'
 import { BookDTO } from './dto/book.dto'
 
 @Injectable()
@@ -12,5 +12,11 @@ export class BookService {
 
   async getAll (): Promise<BookDTO[]> {
     return await this.bookRepository.getAll()
+  }
+
+  async deleteById (id: number): Promise<void> {
+    const del = await this.bookRepository.deleteById(id)
+
+    if (del.affected !== 1) throw new BadRequestException('Error deleting book.')
   }
 }

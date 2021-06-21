@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm'
+import { DeleteResult, EntityRepository, Repository } from 'typeorm'
 import { Book } from './book.entity'
 import { BookDTO } from './dto/book.dto'
 
@@ -32,5 +32,9 @@ export class BookRepository extends Repository<Book> {
       }, [])
 
     return books
+  }
+
+  async deleteById (id: number): Promise<DeleteResult> {
+    return await this.delete(id)
   }
 }

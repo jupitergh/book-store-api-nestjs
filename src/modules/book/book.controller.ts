@@ -1,9 +1,11 @@
-import { Controller, Get, Param } from '@nestjs/common'
+import { Controller, Delete, Get, Param, UseInterceptors } from '@nestjs/common'
+import { FormatterResponseInterceptor } from 'src/utils/transform-response.interceptor'
 import { BookService } from './book.service'
 import { BookIdDTO } from './dto/book-id.dto'
 import { BookDTO } from './dto/book.dto'
 
 @Controller('book')
+@UseInterceptors(FormatterResponseInterceptor)
 export class BookController {
   constructor (private readonly bookServ: BookService) {}
 
@@ -15,5 +17,10 @@ export class BookController {
   @Get()
   async getAll (): Promise<BookDTO[]> {
     return await this.bookServ.getAll()
+  }
+
+  @Delete(':id')
+  async deleteById (@Param() { id }: BookIdDTO): Promise<void> {
+    await this.bookServ.deleteById(id)
   }
 }

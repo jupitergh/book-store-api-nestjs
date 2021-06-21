@@ -1,4 +1,5 @@
-import { Controller, Delete, Get, Param, UseInterceptors } from '@nestjs/common'
+import { CreateBookDTO } from './dto/create-book.dto'
+import { Body, Controller, Delete, Get, Param, Post, UseInterceptors } from '@nestjs/common'
 import { FormatterResponseInterceptor } from 'src/utils/transform-response.interceptor'
 import { BookService } from './book.service'
 import { BookIdDTO } from './dto/book-id.dto'
@@ -22,5 +23,10 @@ export class BookController {
   @Delete(':id')
   async deleteById (@Param() { id }: BookIdDTO): Promise<void> {
     await this.bookServ.deleteById(id)
+  }
+
+  @Post()
+  async createBook (@Body() body: CreateBookDTO): Promise<BookDTO> {
+    return await this.bookServ.createBook(body)
   }
 }

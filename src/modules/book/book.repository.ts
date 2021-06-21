@@ -1,6 +1,8 @@
 import { DeleteResult, EntityRepository, Repository } from 'typeorm'
+import { Author } from '../author/author.entity'
 import { Book } from './book.entity'
 import { BookDTO } from './dto/book.dto'
+import { CreateBookDTO } from './dto/create-book.dto'
 
 @EntityRepository(Book)
 export class BookRepository extends Repository<Book> {
@@ -36,5 +38,19 @@ export class BookRepository extends Repository<Book> {
 
   async deleteById (id: number): Promise<DeleteResult> {
     return await this.delete(id)
+  }
+
+  async createBook (body: CreateBookDTO, author: Author): Promise<BookDTO> {
+    const saved = await this.save({ ...body, author })
+
+    const book: BookDTO = {
+      id: saved.id,
+      title: saved.title,
+      genre: saved.genre,
+      description: saved.description,
+      authorId: saved.author.id
+    }
+
+    return book
   }
 }

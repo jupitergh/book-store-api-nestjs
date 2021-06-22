@@ -1,3 +1,4 @@
+import { UpdateBookDTO } from './dto/update-book.dto'
 import { DeleteResult, EntityRepository, Repository } from 'typeorm'
 import { Author } from '../author/author.entity'
 import { Book } from './book.entity'
@@ -49,6 +50,22 @@ export class BookRepository extends Repository<Book> {
       genre: saved.genre,
       description: saved.description,
       authorId: saved.author.id
+    }
+
+    return book
+  }
+
+  async updateBook (body: UpdateBookDTO, id: number, author?: Author): Promise<BookDTO> {
+    const updatedBook = await this.save({ id, author, ...body })
+
+    const [updated] = await this.find({ where: { id: updatedBook.id } })
+
+    const book: BookDTO = {
+      id: updated.id,
+      title: updated.title,
+      genre: updated.genre,
+      description: updated.description,
+      authorId: body.authorId
     }
 
     return book

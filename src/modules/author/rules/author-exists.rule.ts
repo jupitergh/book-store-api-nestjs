@@ -17,6 +17,6 @@ export class AuthorExistsRule implements ValidatorConstraintInterface {
   }
 
   defaultMessage (_: ValidationArguments): string {
-    throw new NotFoundException(['Author not found.'])
+    throw new NotFoundException(['Author does not exist.'])
   }
 }
